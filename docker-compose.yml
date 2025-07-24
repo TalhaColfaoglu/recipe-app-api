@@ -1,0 +1,14 @@
+version: "3.9"             # Compose sürümü
+
+services:                  # Servisleri tanımlar
+  app:                     # Bu bizim Django uygulamamız Django’da “app” = projedeki belli bir işlevi yapan küçük modül.
+    build:                 # Dockerfile nerede?
+      context: .           # Bu dizinde
+      args:
+        - DEV=true
+    ports:                 # Host:Container port eşleşmesi
+      - "8000:8000"
+    volumes:               # Kodları container içine bağla (hot reload)
+      - ./app:/app
+    command: >             # Konteyner çalışınca şu komutu çalıştır
+      sh -c "python manage.py runserver 0.0.0.0:8000"
