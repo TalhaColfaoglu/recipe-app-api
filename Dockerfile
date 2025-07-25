@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.10-alpine
 LABEL maintainer=""  
 
 ENV PYTHONUNBUFFERED=1
@@ -12,16 +12,13 @@ EXPOSE 8000
 ARG DEV=false
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
-    apt-get update && \
-    apt-get install -y postgresql-client && \
-    apt-get install -y --no-install-recommends build-essential libpq-dev musl-dev && \
+    apk add --no-cache postgresql-client && \
+    apk add --no-cache --virtual .tmp-build-deps \
+        build-base gcc postgresql-dev musl-dev libffi-dev python3-dev && \
     /py/bin/pip install -r /tmp/requirements.txt && \
     if [ "$DEV" = "true" ]; then /py/bin/pip install -r /tmp/requirements.dev.txt ; fi && \
     rm -rf /tmp && \
-    apt-get remove -y build-essential libpq-dev musl-dev && \
-    apt-get autoremove -y && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    apk del .tmp-build-deps
 
 ENV PATH="/py/bin:$PATH"
 
