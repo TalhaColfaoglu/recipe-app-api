@@ -9,11 +9,11 @@ services:
       - static-data:/vol/web
     environment:
       - DB_HOST=db
-      - DB_NAME=dbname
-      - DB_USER=rootuser
-      - DB_PASS=changeme
-      - DJANGO_SECRET_KEY=changeme
-      - DJANGO_ALLOWED_HOSTS=ec2-18-156-171-169.eu-central-1.compute.amazonaws.com,18.156.171.169,127.0.0.1,localhost
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - SECRET_KEY=${DJANGO_SECRET_KEY}
+      - ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
     depends_on:
       - db
 
