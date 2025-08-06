@@ -4,18 +4,16 @@ services:
   app:
     build:
       context: .
-    env_file:
-      - .env
     restart: always
     volumes:
       - static-data:/vol/web
     environment:
       - DB_HOST=db
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASS}
-      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
-      - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
+      - DB_NAME=dbname
+      - DB_USER=rootuser
+      - DB_PASS=changeme
+      - DJANGO_SECRET_KEY=changeme
+      - DJANGO_ALLOWED_HOSTS=ec2-18-156-171-169.eu-central-1.compute.amazonaws.com,18.156.171.169,127.0.0.1,localhost
     depends_on:
       - db
 
